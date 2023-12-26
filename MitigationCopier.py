@@ -49,8 +49,7 @@ def prompt_for_app(prompt_text):
     return appguid
 
 def get_app_guid_from_legacy_id(app_id):
-    app = Applications().get(legacy_id=app_id)
-    if app is None:
+    if (app := Applications().get(legacy_id=app_id)) is None:
         return
     return app['_embedded']['applications'][0]['guid']
 
@@ -244,9 +243,8 @@ def match_for_scan_type(from_app_guid, to_app_guid, dry_run, scan_type='STATIC',
     # look for a match for each finding in the TO list and apply mitigations of the matching flaw, if found
     for thisfinding in copy_array_from:
         from_id = thisfinding['id']
-        match = get_matched_policy_finding(thisfinding, copy_array_to, scan_type)
 
-        if match == None:
+        if (match := get_matched_policy_finding(thisfinding, copy_array_to, scan_type)) == None:
             log.info('No match found for finding {} in {}'.format(from_id,formatted_from))
             continue
 
