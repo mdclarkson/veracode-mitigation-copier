@@ -206,7 +206,8 @@ def set_in_memory_flaw_to_approved(findings_to,to_id):
                 finding['finding']['finding_status']['resolution_status'] = 'APPROVED'
 
 def match_for_scan_type(from_app_guid, to_app_guid, dry_run, scan_type='STATIC',from_sandbox_guid=None, 
-        to_sandbox_guid=None, propose_only=False, id_list=[]):
+        to_sandbox_guid=None, propose_only=False, id_list=None):
+    id_list = [] if id_list is None else id_list
     results_from_app_name = get_application_name(from_app_guid)
     formatted_from = format_application_name(from_app_guid,results_from_app_name,from_sandbox_guid)
     logprint('Getting {} findings for {}'.format(scan_type.lower(),formatted_from))
